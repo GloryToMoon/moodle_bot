@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 import time
 from selenium.webdriver.common.by import By
