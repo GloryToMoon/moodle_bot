@@ -22,14 +22,12 @@ assert opts.headless
 
 #############
 login='login'    #
-password='pass' #
+password='password' #
 #############
 
 group=230
 grapth=['08:00','09:40','11:50','13:40','15:20','17:00','18:40']
 grapth_e=['09:30', '11:10','13:20','15:10','16:50','18:30','20:10']
-#grapth=['08:00','09:10','10:20','11:30','12:24','13:50','15:400']
-#grapth_e=['09:00', '10:10','11:20','12:30','13:40','14:50','16:00']
 
 grapth_sat=['08:00','09:40','11:30','13:10','14:50','16:30']
 grapth_sat_e=['09:30','11:10','13:00','14:40','16:20','18:00']
@@ -59,7 +57,7 @@ while True:
 				rasp.pop()
 
 	if day<6 :
-		for i in range(0, len(rasp)):
+		for i in range(len(rasp)):
 			if rasp[i] != '-' and grapth[i]==time.strftime("%H:%M"):
 				try:
 					driver = webdriver.Firefox(options=opts)
@@ -104,7 +102,7 @@ while True:
 					time.sleep(60)
 
 	elif day==6:
-		for i in range(0, len(rasp)):
+		for i in range(len(rasp)):
 			if grapth_sat[i] != '-' and grapth_sat[i]==time.strftime("%H:%M"):
 				try:
 					driver = webdriver.Firefox(options=opts)
@@ -144,7 +142,7 @@ while True:
 				except KeyboardInterrupt:
 					print ('\nExit...')
 					exit(0)
-				except:
+				except Exception:
 					print ('\n\n\nCRITICAL ERROR\n PLEASE CONTACT https://vk.com/b3zbab\n' + str(traceback.format_exc()+'\n\n\n'))
 					time.sleep(60)
 	try:
