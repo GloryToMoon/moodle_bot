@@ -20,10 +20,10 @@ opts = Options()
 opts.set_headless()
 assert opts.headless
 
-#############
-login='login'    #
-password='password' #
-#############
+####################
+login='login'      #
+password='password'#
+####################
 
 group=230
 grapth=['08:00','09:40','11:50','13:40','15:20','17:00','18:40']
@@ -57,94 +57,54 @@ while True:
 				rasp.pop()
 
 	if day<6 :
-		for i in range(len(rasp)):
-			if rasp[i] != '-' and grapth[i]==time.strftime("%H:%M"):
-				try:
-					driver = webdriver.Firefox(options=opts)
-					wait = WebDriverWait(driver, 1000)
-					driver.get("https://dom.mck-ktits.ru/mod/chat/view.php?id="+rasp[i])
-					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="username"]'))).send_keys(login)
-					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="password"]'))).send_keys(password)
-					wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@class="btn btn-primary btn-block mt-3"]'))).click()
-					requiredHtml = driver.page_source
-					soup = BeautifulSoup(requiredHtml, 'html5lib')
-					chat_name = soup.find_all("h1")[0].text
-					driver.close()
+		grapth_start=grapth
+		grapth_end=grath_e
+	else:
+		grapth_start=grapth_sat
+		grapth_end=grath_sat_e
+	for i in range(len(rasp)):
+		if rasp[i] != '-' and grapth_start[i]==time.strftime("%H:%M"):
+			try:
+				driver = webdriver.Firefox(options=opts)
+				wait = WebDriverWait(driver, 1000)
+				driver.get("https://dom.mck-ktits.ru/mod/chat/view.php?id="+rasp[i])
+				wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="username"]'))).send_keys(login)
+				wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="password"]'))).send_keys(password)
+				wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@class="btn btn-primary btn-block mt-3"]'))).click()
+				requiredHtml = driver.page_source
+				soup = BeautifulSoup(requiredHtml, 'html5lib')
+				chat_name = soup.find_all("h1")[0].text
+				driver.close()
 
-					driver = webdriver.Firefox(options=opts)
-					wait = WebDriverWait(driver, 1000)
-					driver.get("https://dom.mck-ktits.ru/mod/chat/view.php?id="+rasp[i])
-					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="username"]'))).send_keys(login)
-					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="password"]'))).send_keys(password)
-					wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@class="btn btn-primary btn-block mt-3"]'))).click()
+				driver = webdriver.Firefox(options=opts)
+				wait = WebDriverWait(driver, 1000)
+				driver.get("https://dom.mck-ktits.ru/mod/chat/view.php?id="+rasp[i])
+				wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="username"]'))).send_keys(login)
+				wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="password"]'))).send_keys(password)
+				wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@class="btn btn-primary btn-block mt-3"]'))).click()
 
-					driver.find_element_by_link_text("Войти в чат").click()
-					if rasp[i]!=rasp[i-1] or i==0:
-						wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="input-message"]'))).send_keys(hello.decode('utf-8'))
-						wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="button-send"]'))).click()
+				driver.find_element_by_link_text("Войти в чат").click()
+				if rasp[i]!=rasp[i-1] or i==0:
+					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="input-message"]'))).send_keys(hello.decode('utf-8'))
+					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="button-send"]'))).click()
 
-					print ('[' + time.strftime("%A %H:%M") + '] Отметился на '.decode('utf-8')+ str(i+1) + ' паре в чате '.decode('utf-8') + chat_name)
-					while time.strftime("%H:%M") != grapth_e[i]:
-						time.sleep(1)
+				print ('[' + time.strftime("%A %H:%M") + '] Отметился на '.decode('utf-8')+ str(i+1) + ' паре в чате '.decode('utf-8') + chat_name)
+				while time.strftime("%H:%M") != grapth_end[i]:
+					time.sleep(1)
 
-					if i+1==len(rasp):
-						wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="input-message"]'))).send_keys(bie.decode('utf-8'))
-						wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="button-send"]'))).click()
-					elif rasp[i]!=rasp[i+1]:
-						wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="input-message"]'))).send_keys(bie.decode('utf-8'))
-						wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="button-send"]'))).click()
-					driver.close()
-				except KeyboardInterrupt:
-					print ('\nExit...')
-					exit(0)
-				except:
-					print ('\n\n\nCRITICAL ERROR\n PLEASE CONTACT https://vk.com/b3zbab\n' + str(traceback.format_exc()+'\n\n\n'))
-					time.sleep(60)
-
-	elif day==6:
-		for i in range(len(rasp)):
-			if grapth_sat[i] != '-' and grapth_sat[i]==time.strftime("%H:%M"):
-				try:
-					driver = webdriver.Firefox(options=opts)
-					wait = WebDriverWait(driver, 1000)
-					driver.get("https://dom.mck-ktits.ru/mod/chat/view.php?id="+rasp[i])
-					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="username"]'))).send_keys(login)
-					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="password"]'))).send_keys(password)
-					wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@class="btn btn-primary btn-block mt-3"]'))).click()
-					requiredHtml = driver.page_source
-					soup = BeautifulSoup(requiredHtml, 'html5lib')
-					chat_name = soup.find_all("h1")[0].text
-					driver.close()
-
-					driver = webdriver.Firefox(options=opts)
-					wait = WebDriverWait(driver, 1000)
-					driver.get("https://dom.mck-ktits.ru/mod/chat/view.php?id="+rasp[i])
-					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="username"]'))).send_keys(login)
-					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="password"]'))).send_keys(password)
-					wait.until(EC.element_to_be_clickable((By.XPATH, '//button[@class="btn btn-primary btn-block mt-3"]'))).click()
-
-					driver.find_element_by_link_text("Войти в чат").click()
-					if rasp[i]!=rasp[i-1] or i==0:
-						wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="input-message"]'))).send_keys(hello.decode('utf-8'))
-						wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="button-send"]'))).click()
-
-					print ('[' + time.strftime("%A %H:%M") + '] Отметился на '.decode('utf-8')+ str(i+1) + ' паре в чате '.decode('utf-8') + chat_name)
-					while time.strftime("%H:%M") != grapth_sat_e[i]:
-						time.sleep(1)
-
-					if i+1==len(rasp):
-						wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="input-message"]'))).send_keys(bie.decode('utf-8'))
-						wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="button-send"]'))).click()
-					elif rasp[i]!=rasp[i+1]:
-						wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="input-message"]'))).send_keys(bie.decode('utf-8'))
-						wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="button-send"]'))).click()
-					driver.close()
-				except KeyboardInterrupt:
-					print ('\nExit...')
-					exit(0)
-				except Exception:
-					print ('\n\n\nCRITICAL ERROR\n PLEASE CONTACT https://vk.com/b3zbab\n' + str(traceback.format_exc()+'\n\n\n'))
-					time.sleep(60)
+				if i+1==len(rasp):
+					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="input-message"]'))).send_keys(bie.decode('utf-8'))
+					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="button-send"]'))).click()
+				elif rasp[i]!=rasp[i+1]:
+					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="input-message"]'))).send_keys(bie.decode('utf-8'))
+					wait.until(EC.element_to_be_clickable((By.XPATH, '//input[@id="button-send"]'))).click()
+				driver.close()
+			except KeyboardInterrupt:
+				print ('\nExit...')
+				exit(0)
+			except:
+				print ('\n\n\nCRITICAL ERROR\n PLEASE CONTACT https://vk.com/b3zbab\n' + str(traceback.format_exc()+'\n\n\n'))
+				time.sleep(60)
 	try:
 		time.sleep(1)
 	except KeyboardInterrupt:
