@@ -58,10 +58,10 @@ while True:
 
 	if day<6 :
 		grapth_start=grapth
-		grapth_end=grath_e
+		grapth_end=grapth_e
 	else:
 		grapth_start=grapth_sat
-		grapth_end=grath_sat_e
+		grapth_end=grapth_sat_e
 	for i in range(len(rasp)):
 		if rasp[i] != '-' and grapth_start[i]==time.strftime("%H:%M"):
 			try:
@@ -102,7 +102,7 @@ while True:
 			except KeyboardInterrupt:
 				print ('\nExit...')
 				exit(0)
-			except:
+			except Exception:
 				print ('\n\n\nCRITICAL ERROR\n PLEASE CONTACT https://vk.com/b3zbab\n' + str(traceback.format_exc()+'\n\n\n'))
 				time.sleep(60)
 	try:
